@@ -28,7 +28,7 @@ module.exports = {
     module:{
         rules: [
             {
-                test: /\.scss$/,
+                test: /(\.scss|\.css)$/,
                 use: [
                     'style-loader',
                     'css-loader',
@@ -36,27 +36,53 @@ module.exports = {
                 ]
             },
             {
-                test: /\.js$/,
+                test: /.(js|ts)x?$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
+                    options: { presets: ['@babel/env','@babel/preset-react'] },
                 }
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(jpg|png|woff|woff2|eot|ttf|otf|svg|jpeg)$/,
                 type: 'asset/resource',
             }
         ]
     },
+    resolve: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    //   optimization: {
+    //     // https://bundlers.tooling.report/code-splitting/multi-entry/
+    //     runtimeChunk: 'single',
+    //     splitChunks: {
+    //       // Referred docs - https://web.dev/granular-chunking-nextjs/
+    //       chunks: 'all',
+    //       minSize: 30000,
+    //       maxAsyncRequests: 30,
+    //       maxInitialRequests: 25,
+    //       cacheGroups: {
+    //         vendor: {
+    //           name: 'vendors~index',
+    //           test: /[\\/]node_modules[\\/]/,
+    //           chunks: 'all',
+    //           priority: -10,
+    //         },
+    //       },
+    //     },
+    //     minimize: process.env.NODE_ENV !== 'development',
+    //     minimizer: [
+    //       new TerserPlugin({
+    //         ...terserOptions
+    //       }),
+    //     ],
+    //   },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Html Webpack plugin',
             filename: 'index.html',
             template: 'src/template.html'
         }),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
     ]
 }
